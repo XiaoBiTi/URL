@@ -2,11 +2,16 @@ package com.QRLanding;
 
 import com.swetake.util.Qrcode;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.SimpleTimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,9 +66,8 @@ public class LookAndListen {
     /**
      * 制作二维码图片
      */
-    public String createQrcodePicture(String QrcodeUrl) throws IOException {
+    public void createQrcodePicture(String QrcodeUrl) throws IOException {
         int width=175,height=175;
-        String filename = "img\\qrcode.jpg";
         Qrcode qrcode = new Qrcode();
         qrcode.setQrcodeErrorCorrect('H');
         qrcode.setQrcodeEncodeMode('B');
@@ -97,7 +101,7 @@ public class LookAndListen {
         //设置图片格式，与输出的路径
         ImageIO.write(bufferedImage, "jpg", new File("img\\qrcode.jpg"));
         System.out.println("二维码生成完毕");
-        return filename;
+
     }
 
 }

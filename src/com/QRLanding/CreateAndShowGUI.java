@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URL;
 public class CreateAndShowGUI {
     public CreateAndShowGUI(URL url,String filename){
@@ -21,6 +20,7 @@ public class CreateAndShowGUI {
 
         JButton button = new JButton("刷新");
         button.setFont(new Font(null,1,20));
+        label.setIcon(new ImageIcon("img\\qrcode.jpg"));
 
         frame.add(label,BorderLayout.NORTH);
         frame.add(button);
@@ -29,18 +29,10 @@ public class CreateAndShowGUI {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LookAndListen lookAndListen = new LookAndListen();
-                //获取html源文件
-                String htmlResource = lookAndListen.Look(url);
-                //获取二维码图片地址
-                String QrcodeUrl = lookAndListen.getQrcodeUrl(htmlResource);
-                //保存二维码图片
-                String filename = null;
-                try {
-                    filename = lookAndListen.createQrcodePicture(QrcodeUrl);
-                } catch (IOException io) {
-                    System.out.println(io.getMessage());
-                }
+                LAThread laThread = new LAThread();
+                laThread.setUrl(url);
+                Thread thread = new Thread(laThread);
+                thread.start();
                 label.setIcon(new ImageIcon("img\\qrcode.jpg"));
             }
         });
